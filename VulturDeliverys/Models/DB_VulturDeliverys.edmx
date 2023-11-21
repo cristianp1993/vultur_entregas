@@ -1,0 +1,548 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="VulturDeliverysModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Ciudad">
+          <Key>
+            <PropertyRef Name="CiudadID" />
+          </Key>
+          <Property Name="CiudadID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreCiudad" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ClienteID" />
+          </Key>
+          <Property Name="ClienteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="100" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="255" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="20" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Conexion">
+          <Key>
+            <PropertyRef Name="ConexionID" />
+          </Key>
+          <Property Name="ConexionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EnvioID" Type="int" />
+          <Property Name="CiudadOrigenID" Type="int" />
+          <Property Name="CiudadDestinoID" Type="int" />
+          <Property Name="FechaHoraSalida" Type="datetime" />
+          <Property Name="FechaHoraLlegada" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Emisor">
+          <Key>
+            <PropertyRef Name="EmisorID" />
+          </Key>
+          <Property Name="EmisorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClienteID" Type="int" />
+        </EntityType>
+        <EntityType Name="Envio">
+          <Key>
+            <PropertyRef Name="EnvioID" />
+          </Key>
+          <Property Name="EnvioID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmisorID" Type="int" />
+          <Property Name="ReceptorID" Type="int" />
+          <Property Name="DireccionOrigen" Type="nvarchar" MaxLength="255" />
+          <Property Name="DireccionDestino" Type="nvarchar" MaxLength="255" />
+          <Property Name="TelefonoContacto" Type="nvarchar" MaxLength="20" />
+          <Property Name="DescripcionPaquete" Type="nvarchar" MaxLength="255" />
+          <Property Name="PesoPaquete" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="ValorEnvio" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="FechaEnvio" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Receptor">
+          <Key>
+            <PropertyRef Name="ReceptorID" />
+          </Key>
+          <Property Name="ReceptorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="100" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="255" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Trazabilidad">
+          <Key>
+            <PropertyRef Name="TrazabilidadID" />
+          </Key>
+          <Property Name="TrazabilidadID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EnvioID" Type="int" />
+          <Property Name="FechaHora" Type="datetime" />
+          <Property Name="Ubicacion" Type="nvarchar" MaxLength="255" />
+          <Property Name="Estado" Type="nvarchar" MaxLength="50" />
+          <Property Name="DetallesAdicionales" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UsuarioID" />
+          </Key>
+          <Property Name="UsuarioID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreUsuario" Type="nvarchar" MaxLength="50" />
+          <Property Name="Contrasena" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Rol" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__Conexion__Ciudad__36B12243">
+          <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="0..1" />
+          <End Role="Conexion" Type="Self.Conexion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudad">
+              <PropertyRef Name="CiudadID" />
+            </Principal>
+            <Dependent Role="Conexion">
+              <PropertyRef Name="CiudadOrigenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Conexion__Ciudad__37A5467C">
+          <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="0..1" />
+          <End Role="Conexion" Type="Self.Conexion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudad">
+              <PropertyRef Name="CiudadID" />
+            </Principal>
+            <Dependent Role="Conexion">
+              <PropertyRef Name="CiudadDestinoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Conexion__EnvioI__35BCFE0A">
+          <End Role="Envio" Type="Self.Envio" Multiplicity="0..1" />
+          <End Role="Conexion" Type="Self.Conexion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Envio">
+              <PropertyRef Name="EnvioID" />
+            </Principal>
+            <Dependent Role="Conexion">
+              <PropertyRef Name="EnvioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Emisor__ClienteI__286302EC">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Emisor" Type="Self.Emisor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="Emisor">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Envio__EmisorID__2D27B809">
+          <End Role="Emisor" Type="Self.Emisor" Multiplicity="0..1" />
+          <End Role="Envio" Type="Self.Envio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emisor">
+              <PropertyRef Name="EmisorID" />
+            </Principal>
+            <Dependent Role="Envio">
+              <PropertyRef Name="EmisorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Envio__ReceptorI__2E1BDC42">
+          <End Role="Receptor" Type="Self.Receptor" Multiplicity="0..1" />
+          <End Role="Envio" Type="Self.Envio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receptor">
+              <PropertyRef Name="ReceptorID" />
+            </Principal>
+            <Dependent Role="Envio">
+              <PropertyRef Name="ReceptorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Trazabili__Envio__30F848ED">
+          <End Role="Envio" Type="Self.Envio" Multiplicity="0..1" />
+          <End Role="Trazabilidad" Type="Self.Trazabilidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Envio">
+              <PropertyRef Name="EnvioID" />
+            </Principal>
+            <Dependent Role="Trazabilidad">
+              <PropertyRef Name="EnvioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VulturDeliverysModelStoreContainer">
+          <EntitySet Name="Ciudad" EntityType="Self.Ciudad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Conexion" EntityType="Self.Conexion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Emisor" EntityType="Self.Emisor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Envio" EntityType="Self.Envio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Receptor" EntityType="Self.Receptor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trazabilidad" EntityType="Self.Trazabilidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Conexion__Ciudad__36B12243" Association="Self.FK__Conexion__Ciudad__36B12243">
+            <End Role="Ciudad" EntitySet="Ciudad" />
+            <End Role="Conexion" EntitySet="Conexion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Conexion__Ciudad__37A5467C" Association="Self.FK__Conexion__Ciudad__37A5467C">
+            <End Role="Ciudad" EntitySet="Ciudad" />
+            <End Role="Conexion" EntitySet="Conexion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Conexion__EnvioI__35BCFE0A" Association="Self.FK__Conexion__EnvioI__35BCFE0A">
+            <End Role="Envio" EntitySet="Envio" />
+            <End Role="Conexion" EntitySet="Conexion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Emisor__ClienteI__286302EC" Association="Self.FK__Emisor__ClienteI__286302EC">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Emisor" EntitySet="Emisor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Envio__EmisorID__2D27B809" Association="Self.FK__Envio__EmisorID__2D27B809">
+            <End Role="Emisor" EntitySet="Emisor" />
+            <End Role="Envio" EntitySet="Envio" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Envio__ReceptorI__2E1BDC42" Association="Self.FK__Envio__ReceptorI__2E1BDC42">
+            <End Role="Receptor" EntitySet="Receptor" />
+            <End Role="Envio" EntitySet="Envio" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Trazabili__Envio__30F848ED" Association="Self.FK__Trazabili__Envio__30F848ED">
+            <End Role="Envio" EntitySet="Envio" />
+            <End Role="Trazabilidad" EntitySet="Trazabilidad" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VulturDeliverysModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Ciudad">
+          <Key>
+            <PropertyRef Name="CiudadID" />
+          </Key>
+          <Property Name="CiudadID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreCiudad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Conexion" Relationship="Self.FK__Conexion__Ciudad__36B12243" FromRole="Ciudad" ToRole="Conexion" />
+          <NavigationProperty Name="Conexion1" Relationship="Self.FK__Conexion__Ciudad__37A5467C" FromRole="Ciudad" ToRole="Conexion" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ClienteID" />
+          </Key>
+          <Property Name="ClienteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Direccion" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Emisor" Relationship="Self.FK__Emisor__ClienteI__286302EC" FromRole="Cliente" ToRole="Emisor" />
+        </EntityType>
+        <EntityType Name="Conexion">
+          <Key>
+            <PropertyRef Name="ConexionID" />
+          </Key>
+          <Property Name="ConexionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EnvioID" Type="Int32" />
+          <Property Name="CiudadOrigenID" Type="Int32" />
+          <Property Name="CiudadDestinoID" Type="Int32" />
+          <Property Name="FechaHoraSalida" Type="DateTime" Precision="3" />
+          <Property Name="FechaHoraLlegada" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Ciudad" Relationship="Self.FK__Conexion__Ciudad__36B12243" FromRole="Conexion" ToRole="Ciudad" />
+          <NavigationProperty Name="Ciudad1" Relationship="Self.FK__Conexion__Ciudad__37A5467C" FromRole="Conexion" ToRole="Ciudad" />
+          <NavigationProperty Name="Envio" Relationship="Self.FK__Conexion__EnvioI__35BCFE0A" FromRole="Conexion" ToRole="Envio" />
+        </EntityType>
+        <EntityType Name="Emisor">
+          <Key>
+            <PropertyRef Name="EmisorID" />
+          </Key>
+          <Property Name="EmisorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClienteID" Type="Int32" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Emisor__ClienteI__286302EC" FromRole="Emisor" ToRole="Cliente" />
+          <NavigationProperty Name="Envio" Relationship="Self.FK__Envio__EmisorID__2D27B809" FromRole="Emisor" ToRole="Envio" />
+        </EntityType>
+        <EntityType Name="Envio">
+          <Key>
+            <PropertyRef Name="EnvioID" />
+          </Key>
+          <Property Name="EnvioID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmisorID" Type="Int32" />
+          <Property Name="ReceptorID" Type="Int32" />
+          <Property Name="DireccionOrigen" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DireccionDestino" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TelefonoContacto" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DescripcionPaquete" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PesoPaquete" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="ValorEnvio" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="FechaEnvio" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Conexion" Relationship="Self.FK__Conexion__EnvioI__35BCFE0A" FromRole="Envio" ToRole="Conexion" />
+          <NavigationProperty Name="Emisor" Relationship="Self.FK__Envio__EmisorID__2D27B809" FromRole="Envio" ToRole="Emisor" />
+          <NavigationProperty Name="Receptor" Relationship="Self.FK__Envio__ReceptorI__2E1BDC42" FromRole="Envio" ToRole="Receptor" />
+          <NavigationProperty Name="Trazabilidad" Relationship="Self.FK__Trazabili__Envio__30F848ED" FromRole="Envio" ToRole="Trazabilidad" />
+        </EntityType>
+        <EntityType Name="Receptor">
+          <Key>
+            <PropertyRef Name="ReceptorID" />
+          </Key>
+          <Property Name="ReceptorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Direccion" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Envio" Relationship="Self.FK__Envio__ReceptorI__2E1BDC42" FromRole="Receptor" ToRole="Envio" />
+        </EntityType>
+        <EntityType Name="Trazabilidad">
+          <Key>
+            <PropertyRef Name="TrazabilidadID" />
+          </Key>
+          <Property Name="TrazabilidadID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EnvioID" Type="Int32" />
+          <Property Name="FechaHora" Type="DateTime" Precision="3" />
+          <Property Name="Ubicacion" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DetallesAdicionales" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Envio" Relationship="Self.FK__Trazabili__Envio__30F848ED" FromRole="Trazabilidad" ToRole="Envio" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UsuarioID" />
+          </Key>
+          <Property Name="UsuarioID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Rol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK__Conexion__Ciudad__36B12243">
+          <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="0..1" />
+          <End Role="Conexion" Type="Self.Conexion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudad">
+              <PropertyRef Name="CiudadID" />
+            </Principal>
+            <Dependent Role="Conexion">
+              <PropertyRef Name="CiudadOrigenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Conexion__Ciudad__37A5467C">
+          <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="0..1" />
+          <End Role="Conexion" Type="Self.Conexion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudad">
+              <PropertyRef Name="CiudadID" />
+            </Principal>
+            <Dependent Role="Conexion">
+              <PropertyRef Name="CiudadDestinoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Emisor__ClienteI__286302EC">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Emisor" Type="Self.Emisor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="Emisor">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Conexion__EnvioI__35BCFE0A">
+          <End Role="Envio" Type="Self.Envio" Multiplicity="0..1" />
+          <End Role="Conexion" Type="Self.Conexion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Envio">
+              <PropertyRef Name="EnvioID" />
+            </Principal>
+            <Dependent Role="Conexion">
+              <PropertyRef Name="EnvioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Envio__EmisorID__2D27B809">
+          <End Role="Emisor" Type="Self.Emisor" Multiplicity="0..1" />
+          <End Role="Envio" Type="Self.Envio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emisor">
+              <PropertyRef Name="EmisorID" />
+            </Principal>
+            <Dependent Role="Envio">
+              <PropertyRef Name="EmisorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Envio__ReceptorI__2E1BDC42">
+          <End Role="Receptor" Type="Self.Receptor" Multiplicity="0..1" />
+          <End Role="Envio" Type="Self.Envio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receptor">
+              <PropertyRef Name="ReceptorID" />
+            </Principal>
+            <Dependent Role="Envio">
+              <PropertyRef Name="ReceptorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Trazabili__Envio__30F848ED">
+          <End Role="Envio" Type="Self.Envio" Multiplicity="0..1" />
+          <End Role="Trazabilidad" Type="Self.Trazabilidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Envio">
+              <PropertyRef Name="EnvioID" />
+            </Principal>
+            <Dependent Role="Trazabilidad">
+              <PropertyRef Name="EnvioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VulturDeliverysEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Ciudad" EntityType="Self.Ciudad" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="Conexion" EntityType="Self.Conexion" />
+          <EntitySet Name="Emisor" EntityType="Self.Emisor" />
+          <EntitySet Name="Envio" EntityType="Self.Envio" />
+          <EntitySet Name="Receptor" EntityType="Self.Receptor" />
+          <EntitySet Name="Trazabilidad" EntityType="Self.Trazabilidad" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK__Conexion__Ciudad__36B12243" Association="Self.FK__Conexion__Ciudad__36B12243">
+            <End Role="Ciudad" EntitySet="Ciudad" />
+            <End Role="Conexion" EntitySet="Conexion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Conexion__Ciudad__37A5467C" Association="Self.FK__Conexion__Ciudad__37A5467C">
+            <End Role="Ciudad" EntitySet="Ciudad" />
+            <End Role="Conexion" EntitySet="Conexion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Emisor__ClienteI__286302EC" Association="Self.FK__Emisor__ClienteI__286302EC">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Emisor" EntitySet="Emisor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Conexion__EnvioI__35BCFE0A" Association="Self.FK__Conexion__EnvioI__35BCFE0A">
+            <End Role="Envio" EntitySet="Envio" />
+            <End Role="Conexion" EntitySet="Conexion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Envio__EmisorID__2D27B809" Association="Self.FK__Envio__EmisorID__2D27B809">
+            <End Role="Emisor" EntitySet="Emisor" />
+            <End Role="Envio" EntitySet="Envio" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Envio__ReceptorI__2E1BDC42" Association="Self.FK__Envio__ReceptorI__2E1BDC42">
+            <End Role="Receptor" EntitySet="Receptor" />
+            <End Role="Envio" EntitySet="Envio" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Trazabili__Envio__30F848ED" Association="Self.FK__Trazabili__Envio__30F848ED">
+            <End Role="Envio" EntitySet="Envio" />
+            <End Role="Trazabilidad" EntitySet="Trazabilidad" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VulturDeliverysModelStoreContainer" CdmEntityContainer="VulturDeliverysEntities">
+          <EntitySetMapping Name="Ciudad">
+            <EntityTypeMapping TypeName="VulturDeliverysModel.Ciudad">
+              <MappingFragment StoreEntitySet="Ciudad">
+                <ScalarProperty Name="CiudadID" ColumnName="CiudadID" />
+                <ScalarProperty Name="NombreCiudad" ColumnName="NombreCiudad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="VulturDeliverysModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Conexion">
+            <EntityTypeMapping TypeName="VulturDeliverysModel.Conexion">
+              <MappingFragment StoreEntitySet="Conexion">
+                <ScalarProperty Name="ConexionID" ColumnName="ConexionID" />
+                <ScalarProperty Name="EnvioID" ColumnName="EnvioID" />
+                <ScalarProperty Name="CiudadOrigenID" ColumnName="CiudadOrigenID" />
+                <ScalarProperty Name="CiudadDestinoID" ColumnName="CiudadDestinoID" />
+                <ScalarProperty Name="FechaHoraSalida" ColumnName="FechaHoraSalida" />
+                <ScalarProperty Name="FechaHoraLlegada" ColumnName="FechaHoraLlegada" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Emisor">
+            <EntityTypeMapping TypeName="VulturDeliverysModel.Emisor">
+              <MappingFragment StoreEntitySet="Emisor">
+                <ScalarProperty Name="EmisorID" ColumnName="EmisorID" />
+                <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Envio">
+            <EntityTypeMapping TypeName="VulturDeliverysModel.Envio">
+              <MappingFragment StoreEntitySet="Envio">
+                <ScalarProperty Name="EnvioID" ColumnName="EnvioID" />
+                <ScalarProperty Name="EmisorID" ColumnName="EmisorID" />
+                <ScalarProperty Name="ReceptorID" ColumnName="ReceptorID" />
+                <ScalarProperty Name="DireccionOrigen" ColumnName="DireccionOrigen" />
+                <ScalarProperty Name="DireccionDestino" ColumnName="DireccionDestino" />
+                <ScalarProperty Name="TelefonoContacto" ColumnName="TelefonoContacto" />
+                <ScalarProperty Name="DescripcionPaquete" ColumnName="DescripcionPaquete" />
+                <ScalarProperty Name="PesoPaquete" ColumnName="PesoPaquete" />
+                <ScalarProperty Name="ValorEnvio" ColumnName="ValorEnvio" />
+                <ScalarProperty Name="FechaEnvio" ColumnName="FechaEnvio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Receptor">
+            <EntityTypeMapping TypeName="VulturDeliverysModel.Receptor">
+              <MappingFragment StoreEntitySet="Receptor">
+                <ScalarProperty Name="ReceptorID" ColumnName="ReceptorID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trazabilidad">
+            <EntityTypeMapping TypeName="VulturDeliverysModel.Trazabilidad">
+              <MappingFragment StoreEntitySet="Trazabilidad">
+                <ScalarProperty Name="TrazabilidadID" ColumnName="TrazabilidadID" />
+                <ScalarProperty Name="EnvioID" ColumnName="EnvioID" />
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+                <ScalarProperty Name="Ubicacion" ColumnName="Ubicacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="DetallesAdicionales" ColumnName="DetallesAdicionales" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="VulturDeliverysModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+                <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Rol" ColumnName="Rol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
