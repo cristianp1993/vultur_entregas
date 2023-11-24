@@ -17,6 +17,8 @@
         <AssociationConnector Association="VulturDeliverysModel.FK__Envio__ReceptorI__29572725" ManuallyRouted="false" />
         <AssociationConnector Association="VulturDeliverysModel.FK__Conexion__EnvioI__30F848ED" ManuallyRouted="false" />
         <AssociationConnector Association="VulturDeliverysModel.FK__Trazabili__Envio__2C3393D0" ManuallyRouted="false" />
+        <AssociationConnector Association="VulturDeliverysModel.FK__Envio__CiudadDes__35BCFE0A" />
+        <AssociationConnector Association="VulturDeliverysModel.FK__Envio__CiudadOri__34C8D9D1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

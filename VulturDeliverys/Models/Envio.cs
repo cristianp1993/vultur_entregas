@@ -31,6 +31,8 @@ namespace VulturDeliverys.Models
         public Nullable<decimal> PesoPaquete { get; set; }
         public Nullable<decimal> ValorEnvio { get; set; }
         public Nullable<System.DateTime> FechaEnvio { get; set; }
+        public Nullable<int> CiudadOrigenID { get; set; }
+        public Nullable<int> CiudadDestinoID { get; set; }
     
         public virtual Cliente Cliente { get; set; }
         public virtual Cliente Cliente1 { get; set; }
@@ -38,5 +40,7 @@ namespace VulturDeliverys.Models
         public virtual ICollection<Conexion> Conexion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Trazabilidad> Trazabilidad { get; set; }
+        public virtual Ciudad Ciudad { get; set; }
+        public virtual Ciudad Ciudad1 { get; set; }
     }
 }

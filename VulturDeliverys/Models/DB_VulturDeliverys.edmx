@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="VulturDeliverysModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="VulturDeliverysModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Ciudad">
           <Key>
             <PropertyRef Name="CiudadID" />
@@ -48,6 +48,8 @@
           <Property Name="PesoPaquete" Type="decimal" Precision="10" Scale="2" />
           <Property Name="ValorEnvio" Type="decimal" Precision="10" Scale="2" />
           <Property Name="FechaEnvio" Type="datetime" />
+          <Property Name="CiudadOrigenID" Type="int" />
+          <Property Name="CiudadDestinoID" Type="int" />
         </EntityType>
         <EntityType Name="Trazabilidad">
           <Key>
@@ -106,6 +108,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Envio__CiudadDes__35BCFE0A">
+          <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="0..1" />
+          <End Role="Envio" Type="Self.Envio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudad">
+              <PropertyRef Name="CiudadID" />
+            </Principal>
+            <Dependent Role="Envio">
+              <PropertyRef Name="CiudadDestinoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Envio__CiudadOri__34C8D9D1">
+          <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="0..1" />
+          <End Role="Envio" Type="Self.Envio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudad">
+              <PropertyRef Name="CiudadID" />
+            </Principal>
+            <Dependent Role="Envio">
+              <PropertyRef Name="CiudadOrigenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Envio__EmisorID__286302EC">
           <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
           <End Role="Envio" Type="Self.Envio" Multiplicity="*" />
@@ -161,6 +187,14 @@
             <End Role="Envio" EntitySet="Envio" />
             <End Role="Conexion" EntitySet="Conexion" />
           </AssociationSet>
+          <AssociationSet Name="FK__Envio__CiudadDes__35BCFE0A" Association="Self.FK__Envio__CiudadDes__35BCFE0A">
+            <End Role="Ciudad" EntitySet="Ciudad" />
+            <End Role="Envio" EntitySet="Envio" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Envio__CiudadOri__34C8D9D1" Association="Self.FK__Envio__CiudadOri__34C8D9D1">
+            <End Role="Ciudad" EntitySet="Ciudad" />
+            <End Role="Envio" EntitySet="Envio" />
+          </AssociationSet>
           <AssociationSet Name="FK__Envio__EmisorID__286302EC" Association="Self.FK__Envio__EmisorID__286302EC">
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="Envio" EntitySet="Envio" />
@@ -174,8 +208,7 @@
             <End Role="Trazabilidad" EntitySet="Trazabilidad" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VulturDeliverysModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -187,6 +220,8 @@
           <Property Name="NombreCiudad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Conexion" Relationship="Self.FK__Conexion__Ciudad__31EC6D26" FromRole="Ciudad" ToRole="Conexion" />
           <NavigationProperty Name="Conexion1" Relationship="Self.FK__Conexion__Ciudad__32E0915F" FromRole="Ciudad" ToRole="Conexion" />
+          <NavigationProperty Name="Envio" Relationship="VulturDeliverysModel.FK__Envio__CiudadDes__35BCFE0A" FromRole="Ciudad" ToRole="Envio" />
+          <NavigationProperty Name="Envio1" Relationship="VulturDeliverysModel.FK__Envio__CiudadOri__34C8D9D1" FromRole="Ciudad" ToRole="Envio" />
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
@@ -233,6 +268,10 @@
           <NavigationProperty Name="Cliente1" Relationship="Self.FK__Envio__ReceptorI__29572725" FromRole="Envio" ToRole="Cliente" />
           <NavigationProperty Name="Conexion" Relationship="Self.FK__Conexion__EnvioI__30F848ED" FromRole="Envio" ToRole="Conexion" />
           <NavigationProperty Name="Trazabilidad" Relationship="Self.FK__Trazabili__Envio__2C3393D0" FromRole="Envio" ToRole="Trazabilidad" />
+          <Property Name="CiudadOrigenID" Type="Int32" />
+          <Property Name="CiudadDestinoID" Type="Int32" />
+          <NavigationProperty Name="Ciudad" Relationship="VulturDeliverysModel.FK__Envio__CiudadDes__35BCFE0A" FromRole="Envio" ToRole="Ciudad" />
+          <NavigationProperty Name="Ciudad1" Relationship="VulturDeliverysModel.FK__Envio__CiudadOri__34C8D9D1" FromRole="Envio" ToRole="Ciudad" />
         </EntityType>
         <EntityType Name="Trazabilidad">
           <Key>
@@ -359,7 +398,39 @@
             <End Role="Envio" EntitySet="Envio" />
             <End Role="Trazabilidad" EntitySet="Trazabilidad" />
           </AssociationSet>
+          <AssociationSet Name="FK__Envio__CiudadDes__35BCFE0A" Association="VulturDeliverysModel.FK__Envio__CiudadDes__35BCFE0A">
+            <End Role="Ciudad" EntitySet="Ciudad" />
+            <End Role="Envio" EntitySet="Envio" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Envio__CiudadOri__34C8D9D1" Association="VulturDeliverysModel.FK__Envio__CiudadOri__34C8D9D1">
+            <End Role="Ciudad" EntitySet="Ciudad" />
+            <End Role="Envio" EntitySet="Envio" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK__Envio__CiudadDes__35BCFE0A">
+          <End Type="VulturDeliverysModel.Ciudad" Role="Ciudad" Multiplicity="0..1" />
+          <End Type="VulturDeliverysModel.Envio" Role="Envio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudad">
+              <PropertyRef Name="CiudadID" />
+            </Principal>
+            <Dependent Role="Envio">
+              <PropertyRef Name="CiudadDestinoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Envio__CiudadOri__34C8D9D1">
+          <End Type="VulturDeliverysModel.Ciudad" Role="Ciudad" Multiplicity="0..1" />
+          <End Type="VulturDeliverysModel.Envio" Role="Envio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudad">
+              <PropertyRef Name="CiudadID" />
+            </Principal>
+            <Dependent Role="Envio">
+              <PropertyRef Name="CiudadOrigenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -401,6 +472,8 @@
           <EntitySetMapping Name="Envio">
             <EntityTypeMapping TypeName="VulturDeliverysModel.Envio">
               <MappingFragment StoreEntitySet="Envio">
+                <ScalarProperty Name="CiudadDestinoID" ColumnName="CiudadDestinoID" />
+                <ScalarProperty Name="CiudadOrigenID" ColumnName="CiudadOrigenID" />
                 <ScalarProperty Name="EnvioID" ColumnName="EnvioID" />
                 <ScalarProperty Name="EmisorID" ColumnName="EmisorID" />
                 <ScalarProperty Name="ReceptorID" ColumnName="ReceptorID" />

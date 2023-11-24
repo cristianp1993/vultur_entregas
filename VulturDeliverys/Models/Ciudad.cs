@@ -19,6 +19,8 @@ namespace VulturDeliverys.Models
         {
             this.Conexion = new HashSet<Conexion>();
             this.Conexion1 = new HashSet<Conexion>();
+            this.Envio = new HashSet<Envio>();
+            this.Envio1 = new HashSet<Envio>();
         }
     
         public int CiudadID { get; set; }
@@ -28,5 +30,9 @@ namespace VulturDeliverys.Models
         public virtual ICollection<Conexion> Conexion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Conexion> Conexion1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Envio> Envio { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Envio> Envio1 { get; set; }
     }
 }
