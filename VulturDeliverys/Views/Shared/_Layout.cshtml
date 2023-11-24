@@ -20,18 +20,40 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Vultur Deliverys", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Vultur Deliverys", "Index", "Usuario", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             @*<div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
-                </ul>
-            </div>*@
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                    </ul>
+                </div>*@
         </div>
     </div>
     <div class="container body-content">
+
+        @if (ViewBag.ShowNavbar ?? true)
+        {
+            <div class="navbar">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="@Url.Action("Index", "Home")">LogísticaApp</a>
+                </div>
+                <div class="navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Cliente", "Index", "Cliente")</li>  
+                        <li>@Html.ActionLink("Envíos", "Index", "Envio")</li>
+                        <li>@Html.ActionLink("Trazabilidad", "Index", "Trazabilidad")</li>
+                        <!-- Más enlaces según sea necesario -->
+                    </ul>
+                </div>
+            </div>
+        }
+
+
+
+
         @RenderBody()
         <hr />
         <footer>
@@ -42,5 +64,8 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 </html>

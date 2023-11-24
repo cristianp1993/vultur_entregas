@@ -1,0 +1,72 @@
+﻿@model VulturDeliverys.Models.ViewModels.EnvioCompuestoViewModel
+
+@{
+    ViewBag.Title = "Crear Envio";
+}
+
+
+@using (Html.BeginForm("Agregar", "Envio", FormMethod.Post, new { id = "miFormulario" }))
+{
+    //@Html.AntiForgeryToken()
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-md-3">
+                @Html.LabelFor(model => model.NuevoEnvio.EmisorID, new { @id = "labelEmisorID" })
+                @Html.DropDownListFor(model => model.NuevoEnvio.EmisorID, Model.NuevoEnvio.Clientes, "Seleccione Emisor", new { @class = "form-control", @id = "ddlEmisorID" })
+            </div>
+            <div class="form-group col-md-3">
+                @Html.LabelFor(model => model.NuevoEnvio.ReceptorID, new { @id = "labelReceptorID" })
+                @Html.DropDownListFor(model => model.NuevoEnvio.ReceptorID, Model.NuevoEnvio.Clientes, "Seleccione Receptor", new { @class = "form-control", @id = "ddlReceptorID" })
+            </div>
+            <div class="form-group col-md-3">
+                @Html.LabelFor(model => model.NuevoEnvio.CiudadOrigenID, new { @id = "labelCiudadOrigen" })
+                @Html.DropDownListFor(model => model.NuevoEnvio.CiudadOrigenID, Model.NuevoEnvio.Ciudades, "Seleccione Ciudad  Origen", new { @class = "form-control", @id = "ddlCiudadOrigen" })
+            </div>
+            <div class="form-group col-md-3">
+                @Html.LabelFor(model => model.NuevoEnvio.DireccionOrigen, new { @id = "labelDireccionOrigen" })
+                @Html.TextBoxFor(model => model.NuevoEnvio.DireccionOrigen, new { @class = "form-control", @id = "txtDireccionOrigen" })
+            </div>
+            
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-md-3">
+                @Html.LabelFor(model => model.NuevoEnvio.CiudadDestinoID, new { @id = "labelCiudadDestino" })
+                @Html.DropDownListFor(model => model.NuevoEnvio.CiudadDestinoID, Model.NuevoEnvio.Ciudades, "Seleccione Ciudad de Destino", new { @class = "form-control", @id = "ddlCiudadDestino" })
+            </div>
+            <div class="form-group col-md-3">
+                @Html.LabelFor(model => model.NuevoEnvio.DireccionDestino, new { @id = "labelDireccionDestino" })
+                @Html.TextBoxFor(model => model.NuevoEnvio.DireccionDestino, new { @class = "form-control", @id = "txtDireccionDestino" })
+            </div>
+
+            <div class="form-group col-md-3">
+                @Html.LabelFor(model => model.NuevoEnvio.TelefonoContacto, new { @id = "labelTelefonoContacto" })
+                @Html.TextBoxFor(model => model.NuevoEnvio.TelefonoContacto, new { @class = "form-control", @id = "txtTelefonoContacto" })
+            </div>
+
+            <div class="form-group col-md-9">
+                @Html.LabelFor(model => model.NuevoEnvio.DescripcionPaquete, new { @id = "labelDescripcionPaquete" })
+                @Html.TextAreaFor(model => model.NuevoEnvio.DescripcionPaquete, new { @class = "form-control", @id = "txtDescripcionPaquete" })
+            </div>
+
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.NuevoEnvio.PesoPaquete, new { @id = "labelPesoPaquete" })
+                @Html.TextBoxFor(model => model.NuevoEnvio.PesoPaquete, new { @class = "form-control", @id = "txtPesoPaquete" })
+            </div>
+
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.NuevoEnvio.ValorEnvio, new { @id = "labelValorEnvio" })
+                @Html.TextBoxFor(model => model.NuevoEnvio.ValorEnvio, new { @class = "form-control", @id = "txtValorEnvio" })
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-primary" id="btnCrearEnvio">Crear Envío</button>
+    </div>
+
+}
+
+@section Scripts{
+
+    <script src="~/Scripts/Envio/Envio.js"></script>
+}

@@ -1,0 +1,82 @@
+﻿@model VulturDeliverys.Models.ViewModels.ClienteCompuestoViewModel
+@{
+    ViewBag.Title = "Crear Cliente";
+}
+
+<h2>Crear Cliente</h2>
+
+@using (Html.BeginForm("index", "Cliente", FormMethod.Post, new { id = "miFormulario" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.NuevoCliente.Documento)
+        @Html.TextBoxFor(model => model.NuevoCliente.Documento, new { @class = "form-control", @type = "number", @id = "Documento" })
+        @Html.ValidationMessageFor(model => model.NuevoCliente.Documento)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NuevoCliente.Nombre)
+        @Html.TextBoxFor(model => model.NuevoCliente.Nombre, new { @class = "form-control", @id = "Nombre" })
+        @Html.ValidationMessageFor(model => model.NuevoCliente.Nombre)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NuevoCliente.Direccion)
+        @Html.TextBoxFor(model => model.NuevoCliente.Direccion, new { @class = "form-control", @id = "Direccion" })
+        @Html.ValidationMessageFor(model => model.NuevoCliente.Direccion)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NuevoCliente.Telefono)
+        @Html.TextBoxFor(model => model.NuevoCliente.Telefono, new { @class = "form-control", @id = "Telefono" })
+        @Html.ValidationMessageFor(model => model.NuevoCliente.Telefono)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NuevoCliente.Email)
+        @Html.TextBoxFor(model => model.NuevoCliente.Email, new { @class = "form-control", @id = "Email" })
+        @Html.ValidationMessageFor(model => model.NuevoCliente.Email)
+    </div>
+
+    <button type="button" id="btnAddCliente" class="btn btn-primary">Crear</button>
+
+}
+
+<h2>Clientes</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Documento</th>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cliente in Model.ClientesExistentes)
+        {
+            <tr>
+                <td>@cliente.Documento</td>
+                <td>@cliente.Nombre</td>
+                <td>@cliente.Direccion</td>
+                <td>@cliente.Telefono</td>
+                <td>@cliente.Email</td>
+                <td>
+                    <a href="@Url.Action("Detalles", "Cliente", new { ClienteID = cliente.ClienteID })" id="btnDetalle" title="Detalle">
+                        <img src="~/Images/Detalles.png" alt="Detalles" class="icon-tabla" />
+                    </a>
+                    <a href="@Url.Action("Eliminar", "Cliente", new { ClienteID = cliente.ClienteID })" id="btnEliminar" title="Eliminar">
+                        <img src="~/Images/Eliminar.png" alt="Detalles" class="icon-tabla" />
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+
+    <script src="~/Scripts/Cliente/Cliente.js" type="text/javascript"></script>
+}

@@ -32,10 +32,10 @@ namespace VulturDeliverys.Models
         public Nullable<decimal> ValorEnvio { get; set; }
         public Nullable<System.DateTime> FechaEnvio { get; set; }
     
+        public virtual Cliente Cliente { get; set; }
+        public virtual Cliente Cliente1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Conexion> Conexion { get; set; }
-        public virtual Emisor Emisor { get; set; }
-        public virtual Receptor Receptor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Trazabilidad> Trazabilidad { get; set; }
     }

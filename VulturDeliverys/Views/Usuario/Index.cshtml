@@ -1,7 +1,34 @@
-﻿
+﻿@model VulturDeliverys.Models.ViewModels.UsuarioViewModel
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Inicio de Sesión - Vultur Entregas";
 }
 
-<h2>bienvenido a vultur deliverys</h2>
+<div class="login-container">
+    <div class="login-form">
+        @using (Html.BeginForm("index", "Usuario", FormMethod.Post, new { id = "miFormulario" }))
+        {
+            <h2>Iniciar Sesión</h2>
 
+            @Html.ValidationSummary(true, "Los datos de inicio de sesión son incorrectos. Por favor, inténtalo de nuevo.")
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.NombreUsuario)
+                @Html.TextBoxFor(m => m.NombreUsuario, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.NombreUsuario)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Contrasena)
+                @Html.PasswordFor(m => m.Contrasena, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Contrasena)
+            </div>
+
+            <button type="submit" class="btn btn-primary">Ingresar</button>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    
+    <script type="text/javascript" src="~/Scripts/Usuario/Usuario.js"></script>
+}

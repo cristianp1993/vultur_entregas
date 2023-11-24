@@ -28,9 +28,7 @@ namespace VulturDeliverys.Models
         public virtual DbSet<Ciudad> Ciudad { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<Conexion> Conexion { get; set; }
-        public virtual DbSet<Emisor> Emisor { get; set; }
         public virtual DbSet<Envio> Envio { get; set; }
-        public virtual DbSet<Receptor> Receptor { get; set; }
         public virtual DbSet<Trazabilidad> Trazabilidad { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
     }

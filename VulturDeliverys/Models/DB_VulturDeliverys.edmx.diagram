@@ -4,22 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="08841defd617421b8ee0057537064b5f" Name="Diagram1">
-        <EntityTypeShape EntityType="VulturDeliverysModel.Ciudad" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VulturDeliverysModel.Cliente" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="VulturDeliverysModel.Conexion" Width="1.5" PointX="7.5" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="VulturDeliverysModel.Emisor" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VulturDeliverysModel.Envio" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VulturDeliverysModel.Receptor" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="VulturDeliverysModel.Trazabilidad" Width="1.5" PointX="7.5" PointY="8" IsExpanded="true" />
+      <Diagram DiagramId="1e6eeab0c2974299a90cbe67781faced" Name="Diagram1">
+        <EntityTypeShape EntityType="VulturDeliverysModel.Ciudad" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VulturDeliverysModel.Cliente" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VulturDeliverysModel.Conexion" Width="1.5" PointX="5.25" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VulturDeliverysModel.Envio" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VulturDeliverysModel.Trazabilidad" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="VulturDeliverysModel.Usuario" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
-        <AssociationConnector Association="VulturDeliverysModel.FK__Conexion__Ciudad__36B12243" ManuallyRouted="false" />
-        <AssociationConnector Association="VulturDeliverysModel.FK__Conexion__Ciudad__37A5467C" ManuallyRouted="false" />
-        <AssociationConnector Association="VulturDeliverysModel.FK__Emisor__ClienteI__286302EC" ManuallyRouted="false" />
-        <AssociationConnector Association="VulturDeliverysModel.FK__Conexion__EnvioI__35BCFE0A" ManuallyRouted="false" />
-        <AssociationConnector Association="VulturDeliverysModel.FK__Envio__EmisorID__2D27B809" ManuallyRouted="false" />
-        <AssociationConnector Association="VulturDeliverysModel.FK__Envio__ReceptorI__2E1BDC42" ManuallyRouted="false" />
-        <AssociationConnector Association="VulturDeliverysModel.FK__Trazabili__Envio__30F848ED" ManuallyRouted="false" />
+        <AssociationConnector Association="VulturDeliverysModel.FK__Conexion__Ciudad__31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="VulturDeliverysModel.FK__Conexion__Ciudad__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="VulturDeliverysModel.FK__Envio__EmisorID__286302EC" ManuallyRouted="false" />
+        <AssociationConnector Association="VulturDeliverysModel.FK__Envio__ReceptorI__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="VulturDeliverysModel.FK__Conexion__EnvioI__30F848ED" ManuallyRouted="false" />
+        <AssociationConnector Association="VulturDeliverysModel.FK__Trazabili__Envio__2C3393D0" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
