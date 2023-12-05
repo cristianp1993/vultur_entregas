@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Crear Envio";
 }
-
+<link href="~/Content/General.css" rel="stylesheet" type="text/css" />
 
 @using (Html.BeginForm("Agregar", "Envio", FormMethod.Post, new { id = "miFormulario" }))
 {
@@ -12,52 +12,58 @@
         <div class="row">
             <div class="form-group col-md-3">
                 @Html.LabelFor(model => model.NuevoEnvio.EmisorID, new { @id = "labelEmisorID" })
-                @Html.DropDownListFor(model => model.NuevoEnvio.EmisorID, Model.NuevoEnvio.Clientes, "Seleccione Emisor", new { @class = "form-control", @id = "ddlEmisorID" })
-            </div>
-            <div class="form-group col-md-3">
-                @Html.LabelFor(model => model.NuevoEnvio.ReceptorID, new { @id = "labelReceptorID" })
-                @Html.DropDownListFor(model => model.NuevoEnvio.ReceptorID, Model.NuevoEnvio.Clientes, "Seleccione Receptor", new { @class = "form-control", @id = "ddlReceptorID" })
-            </div>
+                @Html.DropDownListFor(model => model.NuevoEnvio.EmisorID, Model.NuevoEnvio.Clientes, "Seleccione Emisor", new { @class = "form-control required", @id = "EmisorID" })
+            </div>            
             <div class="form-group col-md-3">
                 @Html.LabelFor(model => model.NuevoEnvio.CiudadOrigenID, new { @id = "labelCiudadOrigen" })
-                @Html.DropDownListFor(model => model.NuevoEnvio.CiudadOrigenID, Model.NuevoEnvio.Ciudades, "Seleccione Ciudad  Origen", new { @class = "form-control", @id = "ddlCiudadOrigen" })
+                @Html.DropDownListFor(model => model.NuevoEnvio.CiudadOrigenID, Model.NuevoEnvio.Ciudades, "Seleccione Ciudad  Origen", new { @class = "form-control required", @id = "CiudadOrigen" })
             </div>
             <div class="form-group col-md-3">
                 @Html.LabelFor(model => model.NuevoEnvio.DireccionOrigen, new { @id = "labelDireccionOrigen" })
-                @Html.TextBoxFor(model => model.NuevoEnvio.DireccionOrigen, new { @class = "form-control", @id = "txtDireccionOrigen" })
+                @Html.TextBoxFor(model => model.NuevoEnvio.DireccionOrigen, new { @class = "form-control required", @id = "DireccionOrigen" })
             </div>
-            
+
         </div>
         <div class="form-group row">
             <div class="form-group col-md-3">
+                @Html.LabelFor(model => model.NuevoEnvio.ReceptorID, new { @id = "labelReceptorID" })
+                @Html.DropDownListFor(model => model.NuevoEnvio.ReceptorID, Model.NuevoEnvio.Clientes, "Seleccione Receptor", new { @class = "form-control required", @id = "ReceptorID" })
+            </div>
+            <div class="form-group col-md-3">
                 @Html.LabelFor(model => model.NuevoEnvio.CiudadDestinoID, new { @id = "labelCiudadDestino" })
-                @Html.DropDownListFor(model => model.NuevoEnvio.CiudadDestinoID, Model.NuevoEnvio.Ciudades, "Seleccione Ciudad de Destino", new { @class = "form-control", @id = "ddlCiudadDestino" })
+                @Html.DropDownListFor(model => model.NuevoEnvio.CiudadDestinoID, Model.NuevoEnvio.Ciudades, "Seleccione Ciudad de Destino", new { @class = "form-control required", @id = "CiudadDestino" })
             </div>
             <div class="form-group col-md-3">
                 @Html.LabelFor(model => model.NuevoEnvio.DireccionDestino, new { @id = "labelDireccionDestino" })
-                @Html.TextBoxFor(model => model.NuevoEnvio.DireccionDestino, new { @class = "form-control", @id = "txtDireccionDestino" })
-            </div>
-
-            <div class="form-group col-md-3">
-                @Html.LabelFor(model => model.NuevoEnvio.TelefonoContacto, new { @id = "labelTelefonoContacto" })
-                @Html.TextBoxFor(model => model.NuevoEnvio.TelefonoContacto, new { @class = "form-control", @id = "txtTelefonoContacto" })
-            </div>
-
-            <div class="form-group col-md-9">
-                @Html.LabelFor(model => model.NuevoEnvio.DescripcionPaquete, new { @id = "labelDescripcionPaquete" })
-                @Html.TextAreaFor(model => model.NuevoEnvio.DescripcionPaquete, new { @class = "form-control", @id = "txtDescripcionPaquete" })
-            </div>
+                @Html.TextBoxFor(model => model.NuevoEnvio.DireccionDestino, new { @class = "form-control required", @id = "DireccionDestino" })
+            </div>           
 
         </div>
-        <div class="form-group row">
-            <div class="col-md-3">
-                @Html.LabelFor(model => model.NuevoEnvio.PesoPaquete, new { @id = "labelPesoPaquete" })
-                @Html.TextBoxFor(model => model.NuevoEnvio.PesoPaquete, new { @class = "form-control", @id = "txtPesoPaquete" })
+
+        <div class="row form-group">
+            <div class="form-group col-md-3">
+                @Html.LabelFor(model => model.NuevoEnvio.TelefonoContacto, new { @id = "labelTelefonoContacto" })
+                @Html.TextBoxFor(model => model.NuevoEnvio.TelefonoContacto, new { @class = "form-control required", @id = "TelefonoContacto" })
             </div>
 
             <div class="col-md-3">
+                @Html.LabelFor(model => model.NuevoEnvio.FechaEnvio)
+                @Html.TextBoxFor(model => model.NuevoEnvio.FechaEnvio, "{0:yyyy-MM-dd}", new { @class = "form-control required", @type = "date" })
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.NuevoEnvio.PesoPaquete, new { @id = "labelPesoPaquete" })
+                @Html.TextBoxFor(model => model.NuevoEnvio.PesoPaquete, new { @class = "form-control required", @id = "PesoPaquete" })
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-3">
                 @Html.LabelFor(model => model.NuevoEnvio.ValorEnvio, new { @id = "labelValorEnvio" })
-                @Html.TextBoxFor(model => model.NuevoEnvio.ValorEnvio, new { @class = "form-control", @id = "txtValorEnvio" })
+                @Html.TextBoxFor(model => model.NuevoEnvio.ValorEnvio, new { @class = "form-control required", @id = "ValorEnvio" })
+            </div>
+            
+            <div class="form-group col-md-3">
+                @Html.LabelFor(model => model.NuevoEnvio.DescripcionPaquete, new { @id = "labelDescripcionPaquete" })
+                @Html.TextAreaFor(model => model.NuevoEnvio.DescripcionPaquete, new { @class = "form-control required", @id = "DescripcionPaquete" })
             </div>
         </div>
 
@@ -66,7 +72,67 @@
 
 }
 
+<section id="ContainerTabla">
+    <h2>ENVIOS REALIZADOS</h2>
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>Numero Guia</th>
+                <th>Emisor</th>
+                <th>Receptor</th>
+                <th>Dirección Origen</th>
+                <th>Dirección Destino</th>
+                <th>Teléfono de Contacto</th>
+                <th>Descripción del Paquete</th>
+                <th>Peso del Paquete (Kg)</th>
+                <th>Valor del Envío</th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var envio in Model.TodosLosEnvios)
+            {
+                <tr>
+                    <td>@envio.EnvioID</td>
+                    <td>@envio.NombreEmisor</td>
+                    <td>@envio.NombreReceptor</td>
+                    <td>@envio.DireccionOrigen</td>
+                    <td>@envio.DireccionDestino</td>
+                    <td>@envio.TelefonoContacto</td>
+                    <td>@envio.DescripcionPaquete</td>
+                    <td>@envio.PesoPaquete</td>
+                    <td>@envio.ValorEnvio</td>
+                    <td style="width:130px">
+                        <a href="@Url.Action("Index", "Conexion", new { EnvioID = envio.EnvioID })" id="btnConexion" title="Conexion">
+                            <img src="~/Images/Conexion.png" alt="Detalles" class="icon-tabla" />
+                        </a>
+                        <a href="@Url.Action("Detalle", "Envio", new { EnvioID = envio.EnvioID })" id="btnDetalle" title="Detalle">
+                            <img src="~/Images/Detalles.png" alt="Detalles" class="icon-tabla" />
+                        </a>
+                        <a href="@Url.Action("Eliminar", "Envio", new { EnvioID = envio.EnvioID })" id="btnEliminar" title="Eliminar">
+                            <img src="~/Images/Eliminar.png" alt="Detalles" class="icon-tabla" />
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
 @section Scripts{
 
     <script src="~/Scripts/Envio/Envio.js"></script>
+    <script src="~/Scripts/General/ValidadorForm.js"></script>
 }
+<style>
+    h2{
+        text-align:center;
+
+    }
+</style>

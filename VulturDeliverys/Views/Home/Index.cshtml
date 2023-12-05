@@ -2,3 +2,124 @@
     ViewBag.Title = "Vultur Deliverys";
 }
 
+<link href="~/Content/Home.css" rel="stylesheet" type="text/css" />
+
+<div class="containerData">
+    <div class="left-section">
+        <p>Vultur Deliveries: Tus Envíos Alcanzan Nuevas Alturas con Rapidez, Eficiencia y Seguridad</p>
+    </div>
+
+    <div class="slider">
+        <div class="slides">
+            <div id="slide-1"></div>
+            <div id="slide-2"></div>
+            <div id="slide-3"></div>
+            <div id="slide-4"></div>
+            <div id="slide-5"></div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script type="text/javascript" src="~/Scripts/Home/Home.js"></script>
+}
+
+<style>
+
+    
+    .containerData {
+
+        display: flex;
+        height: 70vh;
+    }
+
+    .slider {
+        flex: 1;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .slides {
+        width: 500%;
+        height: 100%;
+        display: flex;
+    }
+
+    .slides > div {
+        width: 20%;
+        height: 100%;
+        flex: 0 0 auto;
+        transition: 2s ease all;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    #slide-1 {
+        background-image: url("../../Images/slide1.png");
+    }
+
+    #slide-2 {
+        background-image: url("../../Images/slide2.png");
+    }
+
+    #slide-3 {
+        background-image: url("../../Images/slide3.png");
+    }
+
+    #slide-4 {
+        background-image: url("../../Images/slide4.png");
+    }
+
+    #slide-5 {
+        background-image: url("../../Images/slide5.png");
+    }
+
+    .left-section {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .left-section p {
+        max-width: 90%;
+        text-align: center;
+        font-size: 2.3em;
+        animation: fadeIn 2s ease-in-out;
+        color: #ffffff;
+    }
+    p {
+        transition: background-color 0.3s ease;
+        background: linear-gradient(to right, #58677C, #1B2838); /* Color inicial */
+        color: white; /* Color del texto */
+        padding: 10px; 
+        border-radius:15px;
+    }
+
+        
+    p:hover:nth-child(1) {
+        background: linear-gradient(to right, #89ABE3FF, #4568DCFF);
+    }
+
+    p:hover:nth-child(2) {
+        background: linear-gradient(to right, #FF9A8B, #FF6A88);
+    }
+
+    p:hover:nth-child(3) {
+        background: linear-gradient(to right, #6EE2F5, #6454F0);
+    }
+
+    p:hover:nth-child(4) {
+        background: linear-gradient(to right, #FEE140, #FA709A);
+    }
+
+    p:hover:nth-child(5) {
+        background: linear-gradient(to right, #8EC5FC, #E0C3FC);
+    }
+
+
+</style>

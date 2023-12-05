@@ -129,8 +129,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\ConexionController.cs" />
     <Compile Include="Controllers\EnvioController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TrazabilidadController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -170,8 +172,13 @@
     </Compile>
     <Compile Include="Models\ViewModels\ClienteCompuestoViewModel.cs" />
     <Compile Include="Models\ViewModels\ClienteViewModel.cs" />
+    <Compile Include="Models\ViewModels\ConexionCompuestoViewModel.cs" />
+    <Compile Include="Models\ViewModels\ConexionViewModel.cs" />
     <Compile Include="Models\ViewModels\EnvioCompuestoViewModel.cs" />
+    <Compile Include="Models\ViewModels\EnvioDetallesViewModel.cs" />
     <Compile Include="Models\ViewModels\EnvioViewModel.cs" />
+    <Compile Include="Models\ViewModels\TrazabilidadCompuestoViewModel.cs" />
+    <Compile Include="Models\ViewModels\TrazabilidadViewModel.cs" />
     <Compile Include="Models\ViewModels\UsuarioViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -180,12 +187,23 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\General.css" />
+    <Content Include="Content\Home.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Background.png" />
+    <Content Include="Images\background2.jpg" />
+    <Content Include="Images\Conexion.png" />
     <Content Include="Images\Detalles.png" />
+    <Content Include="Images\EditarConexion.png" />
     <Content Include="Images\Eliminar.png" />
+    <Content Include="Images\slide1.png" />
+    <Content Include="Images\slide2.png" />
+    <Content Include="Images\slide3.png" />
+    <Content Include="Images\slide4.png" />
+    <Content Include="Images\slide5.png" />
     <Content Include="Images\vultur.png" />
     <Content Include="Models\DB_VulturDeliverys.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -208,7 +226,10 @@
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Cliente\Cliente.js" />
+    <Content Include="Scripts\Conexion\Conexion.js" />
     <Content Include="Scripts\Envio\Envio.js" />
+    <Content Include="Scripts\General\ValidadorForm.js" />
+    <Content Include="Scripts\Home\Home.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -219,6 +240,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Trazabilidad\Trazabilidad.js" />
     <Content Include="Scripts\Usuario\Usuario.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -236,10 +258,11 @@
     <Content Include="Views\Cliente\Index.cshtml" />
     <Content Include="Views\Cliente\Detalles.cshtml" />
     <Content Include="Views\Envio\Index.cshtml" />
+    <Content Include="Views\Conexion\Index.cshtml" />
+    <Content Include="Views\Trazabilidad\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Trazabilidad\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

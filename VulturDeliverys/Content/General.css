@@ -1,0 +1,79 @@
+﻿body {
+    background: linear-gradient(to right, #B6D0EE, #303F52, #1B2838);
+    color: white;
+}
+
+
+/* Estilo general para los formularios */
+form {
+    background-color: rgba(255, 255, 255, 0.1); /* Ligeramente transparente */
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para los inputs y textareas */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+/* Estilo para los labels */
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+/* Estilo para los botones */
+input[type="submit"],
+button {
+    background-color: #4CAF50; /* Color verde, puedes cambiarlo */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    input[type="submit"]:hover,
+    button:hover {
+        background-color: #45a049;
+    }
+
+/* Estilo general para las tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+
+th {
+    background-color: #255993;
+    color: white;
+    padding: 15px;
+}
+
+
+td {
+    padding: 15px;
+    border-top: 1px solid #ddd;
+    text-align: left;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+
+tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.3);
+}

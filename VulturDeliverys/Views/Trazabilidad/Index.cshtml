@@ -1,0 +1,75 @@
+﻿@model  VulturDeliverys.Models.ViewModels.TrazabilidadCompuestoViewModel
+
+@{
+    ViewBag.Title = "Agregar Nueva Trazabilidad";
+}
+
+<link href="~/Content/General.css" rel="stylesheet" type="text/css" />
+
+@using (Html.BeginForm("AgregarTrazabilidad", "Trazabilidad", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.NuevaTrazabilidad.EnvioID, new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.NuevaTrazabilidad.EnvioID, new { @class = "form-control", @id= "EnvioID" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.NuevaTrazabilidad.FechaHora, new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.NuevaTrazabilidad.FechaHora, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", @type = "datetime-local", @Value = DateTime.Now.ToString("yyyy-MM-ddTHH:mm"), @id= "FechaHora" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.NuevaTrazabilidad.Ubicacion, new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.NuevaTrazabilidad.Ubicacion, new { @class = "form-control",@id= "Ubicacion" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.NuevaTrazabilidad.Estado, new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.NuevaTrazabilidad.Estado, Model.NuevaTrazabilidad.EstadosPosibles, "Seleccione el Estado", new { @class = "form-control", @id= "Estado" })
+        </div>
+        <div class="form-group col-md-8">
+            @Html.LabelFor(model => model.NuevaTrazabilidad.DetallesAdicionales, new { @class = "control-label" })
+            @Html.TextAreaFor(model => model.NuevaTrazabilidad.DetallesAdicionales, new { @class = "form-control", @id= "DetallesAdicionales" })
+        </div>
+    </div>
+
+
+    <button type="button" id="btnAgregar" class="btn btn-primary">Agregar Trazabilidad</button>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>ID del Envío</th>
+            <th>Fecha y Hora</th>
+            <th>Ubicación</th>
+            <th>Estado</th>
+            <th>Detalles Adicionales</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var trazabilidad in Model.TodasLasTrazabilidades)
+        {
+            <tr>
+                <td>@trazabilidad.TrazabilidadID</td>
+                <td>@trazabilidad.EnvioID</td>
+                <td>@trazabilidad.FechaHora</td>
+                <td>@trazabilidad.Ubicacion</td>
+                <td>@trazabilidad.Estado</td>
+                <td>@trazabilidad.DetallesAdicionales</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts{
+    
+    <script type="text/javascript" src="~/Scripts/Trazabilidad/Trazabilidad.js"></script>
+    <script type="text/javascript" src="~/Scripts/General/ValidadorForm.js"></script>
+}

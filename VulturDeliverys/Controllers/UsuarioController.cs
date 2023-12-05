@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -41,5 +42,75 @@ namespace VulturDeliverys.Controllers
             }
             
         }
+
+        public ActionResult ObtenerDetallesDeEnvioJson(int envioId)
+        {
+            // Método que obtiene los detalles
+            var detallesEnvio = ConsultarGuia(envioId); 
+
+            if (detallesEnvio != null)
+            {
+                return Json(detallesEnvio, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                // Manejar el caso en que no se encuentren detalles para el envío
+                return Json(new { }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public EnvioDetallesViewModel ConsultarGuia(int nroGuia)
+        {
+            using (var context = new VulturDeliverysEntities())
+            {
+                var viewModel = new EnvioDetallesViewModel();
+
+                // Obteniendo los datos del envío
+                viewModel.Envio = context.Envio
+                    .Where(e => e.EnvioID == nroGuia)
+                    .Join(context.Cliente, en => en.EmisorID, cl => cl.ClienteID, (en, cl) => new { en, cl })
+                    .Join(context.Cliente, temp => temp.en.ReceptorID, cli => cli.ClienteID, (temp, cli) => new EnvioModelQuery
+                    {
+                        EnvioID = temp.en.EnvioID,
+                        NombreEmisor = temp.cl.Nombre,
+                        NombreReceptor = cli.Nombre,
+                        DireccionOrigen = temp.en.DireccionOrigen,
+                        DireccionDestino = temp.en.DireccionDestino,
+                        DescripcionPaquete = temp.en.DescripcionPaquete,
+                        PesoPaquete = (double)temp.en.PesoPaquete,
+                        ValorEnvio = (decimal)temp.en.ValorEnvio,
+                        FechaEnvio = (DateTime)temp.en.FechaEnvio
+                    })
+                    .FirstOrDefault();
+
+                // Obteniendo las conexiones relacionadas con el envío
+                viewModel.Conexiones = context.Conexion
+                    .Where(c => c.EnvioID == nroGuia)
+                    .Join(context.Ciudad, en => en.CiudadOrigenID, ci => ci.CiudadID, (en, ci) => new { en, ci })
+                    .Join(context.Ciudad, temp => temp.en.CiudadDestinoID, ciu => ciu.CiudadID, (temp, ciu) => new ConexionModelQuery
+                    {
+                        NombreCiudadOrigen = temp.ci.NombreCiudad,
+                        NombreCiudadDestino = ciu.NombreCiudad,
+                        FechaHoraSalida = (DateTime)temp.en.FechaHoraSalida,
+                        FechaHoraLlegada = temp.en.FechaHoraLlegada
+                    })
+                    .ToList();
+
+                // Obteniendo las trazabilidades relacionadas con el envío
+                viewModel.Trazabilidades = context.Trazabilidad
+                    .Where(t => t.EnvioID == nroGuia)
+                    .Select(t => new TrazabilidadModelQuery
+                    {
+                        FechaHora = (DateTime)t.FechaHora,
+                        Ubicacion = t.Ubicacion,
+                        Estado = t.Estado,
+                        DetallesAdicionales = t.DetallesAdicionales
+                    })
+                    .ToList();
+
+                return viewModel;
+            }
+        }
+
     }
 }

@@ -155,7 +155,7 @@ namespace VulturDeliverys.Controllers
 
 
 
-        [HttpPost]
+       
         public ActionResult Eliminar(int ClienteID)
         {
             try

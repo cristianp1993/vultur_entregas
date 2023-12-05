@@ -1,0 +1,97 @@
+﻿@model VulturDeliverys.Models.ViewModels.ConexionCompuestoViewModel
+@{
+    ViewBag.Title = "Conexion Envio";
+}
+<link href="~/Content/General.css" rel="stylesheet" type="text/css" />
+<h3>Conexiones para el Envio @Model.NuevaConexion.EnvioID</h3>
+
+@using (Html.BeginForm("AgregarConexion", "ControladorConexion", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NuevaConexion.EnvioID)
+        @Html.TextBoxFor(model => model.NuevaConexion.EnvioID, new { @class = "form-control", @readonly = "readonly" ,@id= "inputEnvioID" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NuevaConexion.CiudadOrigenID)
+        @Html.DropDownListFor(model => model.NuevaConexion.CiudadOrigenID, Model.NuevaConexion.CiudadesOrigen, "Seleccione Ciudad Origen", new { @class = "form-control required" ,@id= "ciudadOrigenID" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NuevaConexion.CiudadDestinoID)
+        @Html.DropDownListFor(model => model.NuevaConexion.CiudadDestinoID, Model.NuevaConexion.CiudadesDestino, "Seleccione Ciudad Destino", new { @class = "form-control required", @id = "ciudadDestinoID" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NuevaConexion.FechaSalida)
+        @Html.TextBoxFor(model => model.NuevaConexion.FechaSalida, new { @class = "form-control required", @type = "datetime-local", @step = "1",@id= "fechaSalida" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NuevaConexion.FechaLlegada)
+        @Html.TextBoxFor(model => model.NuevaConexion.FechaLlegada, new { @class = "form-control", @type = "datetime-local", @step = "1", @id= "fechaLlegada" })
+    </div>
+
+    <button type="button" id="btnCrear" class="btn btn-primary">Agregar Conexión</button>
+}
+
+@* Tabla para mostrar todas las conexiones *@
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Conexión</th>
+            <th>ID Envío</th>
+            <th>Ciudad Origen</th>
+            <th>Ciudad Destino</th>
+            <th>Fecha de Salida</th>
+            <th>Fecha de Llegada</th>   
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var conexion in Model.TodasLasConexiones)
+        {
+            <tr>
+                <td>@conexion.ConexionID</td>
+                <td>@conexion.EnvioID</td>
+                <td>@conexion.NombreCiudadOrigen</td> 
+                <td>@conexion.NombreCiudadDestino</td> 
+                <td>@conexion.FechaSalida.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>
+                    @if (conexion.FechaLlegada.HasValue)
+                    {
+                        @conexion.FechaLlegada.Value.ToString("yyyy-MM-dd HH:mm")
+                    }
+                    else
+                    {
+                        @: Pendiente
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("Editar", "Conexion", new { ConexionID = conexion.ConexionID })" id="btnEditar" title="Editar">
+                        <img src="~/Images/EditarConexion.png" alt="Editar" class="icon-tabla" />
+                    </a>
+                    <button data-value="@conexion.ConexionID" class="btnEliminar" title="Eliminar">
+                        <img src="~/Images/Eliminar.png" alt="Eliminar" class="icon-tabla" />
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts{
+    
+    <script type="text/javascript" src="~/Scripts/Conexion/Conexion.js"></script>    
+    <script type="text/javascript" src="~/Scripts/General/ValidadorForm.js"></script>    
+}
+
+<style>
+    .btnEliminar{
+        border-color:transparent;
+        background-color:transparent;
+    }
+</style>

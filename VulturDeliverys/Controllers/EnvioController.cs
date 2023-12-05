@@ -21,14 +21,15 @@ namespace VulturDeliverys.Controllers
                 {
 
                     EnvioID = xh.EnvioID,
-                    EmisorID = (int)xh.EmisorID,
-                    ReceptorID = (int)xh.ReceptorID,
+                    NombreEmisor = xh.Cliente.Nombre,
+                    NombreReceptor = xh.Cliente1.Nombre,
                     DireccionOrigen = xh.DireccionOrigen,
                     DireccionDestino = xh.DireccionDestino,
                     TelefonoContacto = xh.TelefonoContacto,
                     DescripcionPaquete = xh.DescripcionPaquete,
                     PesoPaquete = (double)xh.PesoPaquete,
                     ValorEnvio = (decimal)xh.ValorEnvio,
+                    
 
                 }).ToList();
 
@@ -67,13 +68,16 @@ namespace VulturDeliverys.Controllers
                 oEnvio.DireccionDestino = model.DireccionDestino;
                 oEnvio.TelefonoContacto = model.TelefonoContacto;
                 oEnvio.DescripcionPaquete = model.DescripcionPaquete;
-                oEnvio.PesoPaquete = (decimal)model.PesoPaquete;
+                oEnvio.PesoPaquete = (decimal)model.PesoPaquete; 
                 oEnvio.ValorEnvio = model.ValorEnvio;
+                oEnvio.FechaEnvio = model.FechaEnvio;
+                oEnvio.CiudadOrigenID = model.CiudadOrigenID;
+                oEnvio.CiudadDestinoID = model.CiudadDestinoID;
 
                 context.Envio.Add(oEnvio);
                 context.SaveChanges();
 
-                return Json(new { success = true, message = "Cliente creado." });
+                return Json(new { success = true, message = "Envio creado." });
 
             }
         }
@@ -86,7 +90,7 @@ namespace VulturDeliverys.Controllers
     }
 
 
-    private List<SelectListItem> ObtenerClientesParaDropdown()
+    public List<SelectListItem> ObtenerClientesParaDropdown()
     {
         try
         {
@@ -97,8 +101,7 @@ namespace VulturDeliverys.Controllers
                 {
                     Value = c.ClienteID.ToString(),
                     Text = c.Nombre
-                })
-                        .ToList();
+                }) .ToList();
 
                 return clientes;
 
@@ -110,7 +113,7 @@ namespace VulturDeliverys.Controllers
             throw;
         }
     } 
-    private List<SelectListItem> ObtenerCiudadesParaDropdown()
+    public List<SelectListItem> ObtenerCiudadesParaDropdown()
     {
         try
         {

@@ -1,20 +1,15 @@
-﻿const grabarEnvio = document.getElementById("btnCrearEnvio")
+﻿const grabar = document.getElementById("btnAgregar")
 
-if (grabarEnvio) {
-    grabarEnvio.addEventListener("click", async (e) => {
+if (grabar) {
+    grabar.addEventListener("click", async (e) => {
         e.preventDefault();
 
         const model = {
-            EmisorID: document.getElementById('EmisorID').value,
-            ReceptorID: document.getElementById('ReceptorID').value,
-            DireccionOrigen: document.getElementById('DireccionOrigen').value,
-            DireccionDestino: document.getElementById('DireccionDestino').value,
-            TelefonoContacto: document.getElementById('TelefonoContacto').value,
-            DescripcionPaquete: document.getElementById('DescripcionPaquete').value,
-            PesoPaquete: parseFloat(document.getElementById('PesoPaquete').value),
-            ValorEnvio: parseFloat(document.getElementById('ValorEnvio').value),
-            CiudadOrigenID: document.getElementById('CiudadOrigen').value,
-            CiudadDestinoID: document.getElementById('CiudadDestino').value
+            EnvioID: document.getElementById('EnvioID').value,
+            FechaHora: document.getElementById('FechaHora').value,
+            Ubicacion: document.getElementById('Ubicacion').value,
+            Estado: document.getElementById('Estado').value,
+            DetallesAdicionales: document.getElementById('DetallesAdicionales').value
         };
 
         const formValid = await validateForm();
@@ -23,7 +18,7 @@ if (grabarEnvio) {
         if (formValid) {
 
 
-            fetch(`/Envio/Agregar`, {
+            fetch(`/Trazabilidad/Agregar`, {
                 method: 'POST',
                 body: JSON.stringify(model),
                 headers: {
@@ -44,12 +39,12 @@ if (grabarEnvio) {
 
                         Swal.fire({
                             title: 'Muy bien!',
-                            text: 'Envio creado con exito',
+                            text: 'Trazabilidad creada con exito',
                             icon: 'success',
                             timer: 2000
                         }).then(() => {
 
-                            window.location.href = '/Envio/Index';
+                            window.location.href = '/Trazabilidad/Index';
                         });
 
                     } else if (data.success == false && data.message == "Duplicado") {
@@ -79,3 +74,5 @@ if (grabarEnvio) {
         }
     })
 }
+
+
