@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Detalles Cliente";
 }
-
+<link href="~/Content/General.css" rel="stylesheet" type="text/css" />
 <h2>Detalle del Cliente  @Model.Nombre</h2>
 
 @using (Html.BeginForm("Detalles", "Cliente", FormMethod.Post, new { id = "miFormulario" }))

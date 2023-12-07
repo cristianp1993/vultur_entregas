@@ -46,8 +46,8 @@ document.getElementById("miFormulario").addEventListener("submit", function (e) 
     });
 });
 
-document.getElementById("btnBuscarGuia").addEventListener("click", (e) => {
-    
+document.getElementById("formBuscador").addEventListener("submit", (e) => {
+    e.preventDefault();
     const nroGuia = document.getElementById("buscador").value;
 
     if (nroGuia!="") {
@@ -76,19 +76,16 @@ document.getElementById("btnBuscarGuia").addEventListener("click", (e) => {
                     } else {
 
                         const dialogo = document.getElementById('dialogo');
-                        dialogo.innerHTML = ''; // Limpiar el contenido anterior
+                        dialogo.innerHTML = ''; // Limpio el contenido anterior
                         // Agregar información del envío
                         dialogo.appendChild(crearSeccionEnvio(data.Envio));
 
                         // Agregar conexiones
-                        data.Conexiones.forEach(function (conexion) {
-                            dialogo.appendChild(crearSeccionConexion(conexion));
-                        });
+                        dialogo.appendChild(crearSeccionConexion(data.Conexiones));
 
                         // Agregar trazabilidades
-                        data.Trazabilidades.forEach(function (trazabilidad) {
-                            dialogo.appendChild(crearSeccionTrazabilidad(trazabilidad));
-                        });
+                        dialogo.appendChild(crearSeccionTrazabilidad(data.Trazabilidades));
+                       
 
                         dialogo.showModal();
                     }
@@ -106,7 +103,7 @@ document.getElementById("btnBuscarGuia").addEventListener("click", (e) => {
 
 function crearSeccionEnvio(envio) {
     const seccion = document.createElement('div');
-    seccion.innerHTML = '<h3>Detalle del Envío</h3>';
+    seccion.innerHTML = '<h3 style="text-align:center">Detalle del Envío</h3>';
 
     const tabla = document.createElement('table');
     tabla.style.width = '100%';
@@ -142,9 +139,9 @@ function crearSeccionEnvio(envio) {
     return seccion;
 }
 
-function crearSeccionConexion(conexion) {
+function crearSeccionConexion(conexiones) {
     const seccion = document.createElement('div');
-    seccion.innerHTML = '<h4>Detalle de la Conexión</h4>';
+    seccion.innerHTML = '<h4 style="text-align:center; margin-top:35px">Detalle de la Conexión</h4>';
 
     const tabla = document.createElement('table');
     tabla.style.width = '100%';
@@ -163,20 +160,22 @@ function crearSeccionConexion(conexion) {
     });
     thead.appendChild(tr);
 
-    // Datos de la tabla
-    tr = document.createElement('tr');
-    const valores = [
-        conexion.NombreCiudadOrigen,
-        conexion.NombreCiudadDestino,
-        formatFecha(conexion.FechaHoraSalida),
-        formatFecha(conexion.FechaHoraLlegada)
-    ];
-    valores.forEach(valor => {
-        const td = document.createElement('td');
-        td.appendChild(document.createTextNode(valor));
-        tr.appendChild(td);
+    // Añadir filas para cada conexión
+    conexiones.forEach(conexion => {
+        tr = document.createElement('tr');
+        const valores = [
+            conexion.NombreCiudadOrigen,
+            conexion.NombreCiudadDestino,
+            formatFecha(conexion.FechaHoraSalida),
+            formatFecha(conexion.FechaHoraLlegada)
+        ];
+        valores.forEach(valor => {
+            const td = document.createElement('td');
+            td.appendChild(document.createTextNode(valor));
+            tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
     });
-    tbody.appendChild(tr);
 
     tabla.appendChild(thead);
     tabla.appendChild(tbody);
@@ -185,9 +184,10 @@ function crearSeccionConexion(conexion) {
     return seccion;
 }
 
-function crearSeccionTrazabilidad(trazabilidad) {
+
+function crearSeccionTrazabilidad(trazabilidades) {
     const seccion = document.createElement('div');
-    seccion.innerHTML = '<h4>Trazabilidad del Paquete</h4>';
+    seccion.innerHTML = '<h4 style="text-align:center; margin-top:35px">Detalle de Trazabilidad</h4>';
 
     const tabla = document.createElement('table');
     tabla.style.width = '100%';
@@ -197,7 +197,7 @@ function crearSeccionTrazabilidad(trazabilidad) {
     const tbody = document.createElement('tbody');
 
     // Encabezados de la tabla
-    const headers = ['Fecha y Hora', 'Ubicación', 'Estado', 'Detalles Adicionales'];
+    const headers = ['Fecha', 'ubicación', 'Observaciones', 'Estado'];
     let tr = document.createElement('tr');
     headers.forEach(header => {
         const th = document.createElement('th');
@@ -206,15 +206,22 @@ function crearSeccionTrazabilidad(trazabilidad) {
     });
     thead.appendChild(tr);
 
-    // Datos de la tabla
-    tr = document.createElement('tr');
-    const valores = [formatFecha(trazabilidad.FechaHora), trazabilidad.Ubicacion, trazabilidad.Estado, trazabilidad.DetallesAdicionales];
-    valores.forEach(valor => {
-        const td = document.createElement('td');
-        td.appendChild(document.createTextNode(valor));
-        tr.appendChild(td);
+    // Añadir filas para cada trazabilidad
+    trazabilidades.forEach(trazabilidad => {
+        tr = document.createElement('tr');
+        const valores = [
+            formatFecha(trazabilidad.FechaHora),
+            trazabilidad.Ubicacion,
+            trazabilidad.DetallesAdicionales,
+            trazabilidad.Estado
+        ];
+        valores.forEach(valor => {
+            const td = document.createElement('td');
+            td.appendChild(document.createTextNode(valor));
+            tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
     });
-    tbody.appendChild(tr);
 
     tabla.appendChild(thead);
     tabla.appendChild(tbody);
@@ -222,6 +229,7 @@ function crearSeccionTrazabilidad(trazabilidad) {
 
     return seccion;
 }
+
 
 
 function formatFecha(fechaString) {

@@ -1,6 +1,12 @@
-﻿body {
+﻿html, body {
+    height: 100%; /* Establecer la altura del html y body al 100% */
+    margin: 0; /* Remover márgenes predeterminados */
+}
+body {
     padding-top: 50px;
     padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -45,9 +51,53 @@ input[type=number] {
 }
 
 footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
+    background-color: #5E6061;
+    color: white;
+    padding: 20px 0;
     width: 100%;
-    text-align: center; /* Centra el contenido del footer */
+    margin-top:200px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around; 
+    align-items: flex-start;
+    max-width: 100%; 
+    margin: 0;
+    padding: 0 20px; 
+}
+
+.footer-section {
+    margin-bottom: 20px;
+}
+
+    .footer-section h4 {
+        margin-bottom: 10px;
+        font-size: 16px;
+        text-transform: uppercase; /* Estilo de título */
+    }
+
+    .footer-section ul {
+        list-style: none; /* Remover estilos de lista */
+        padding: 0;
+        margin: 0;
+    }
+
+        .footer-section ul li {
+            margin-bottom: 5px; /* Espaciado entre elementos de lista */
+        }
+
+    .footer-section a {
+        color: white; /* Color de los enlaces */
+        text-decoration: none; /* Remover subrayado */
+    }
+
+        .footer-section a:hover {
+            text-decoration: underline; /* Estilo de hover para enlaces */
+        }
+
+.footer-copy {
+    text-align: center; /* Centrar texto de derechos reservados */
+    margin-top: 20px;
+    font-size: 12px;
 }

@@ -1,0 +1,35 @@
+﻿@model List<VulturDeliverys.Models.ViewModels.UsuarioViewModel>
+@{
+    ViewBag.Title = "Lista de Usuarios";
+}
+<link href="~/Content/General.css" rel="stylesheet" type="text/css" />
+<table class="table">
+    <thead>
+        <tr>
+            <th>Usuario ID</th>
+            <th>Usuario</th>
+            <th>Correo</th>
+            <th>Rol</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var usuario in Model)
+        {
+            <tr>
+                <td>@usuario.UsuarioID</td>
+                <td>@usuario.NombreUsuario</td>
+                <td>@usuario.Email</td>
+                <td>@usuario.Rol</td>
+                <td>
+                    <a href="@Url.Action("Editar", "Usuario", new { UsuarioId = usuario.UsuarioID })" id="btnDetalle" title="Detalle">
+                        <img src="~/Images/Detalles.png" alt="Detalles" class="icon-tabla" />
+                    </a>
+                    <a href="@Url.Action("Eliminar", "Usuario", new { UsuarioId = usuario.UsuarioID })" id="btnEliminar" title="Eliminar">
+                        <img src="~/Images/Eliminar.png" alt="Detalles" class="icon-tabla" />
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

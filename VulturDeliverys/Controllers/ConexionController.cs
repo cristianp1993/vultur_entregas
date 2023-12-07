@@ -53,32 +53,44 @@ namespace VulturDeliverys.Controllers
             {
                 using (VulturDeliverysEntities context = new VulturDeliverysEntities())
                 {
-                    Conexion nuevaConexion = new Conexion
+                    // Buscar si ya existe una conexión con el mismo EnvioID y ConexionID
+                    var conexionExistente = context.Conexion.FirstOrDefault(c => c.EnvioID == viewModel.EnvioID && c.ConexionID == viewModel.ConexionID);
+
+                    if (conexionExistente != null)
                     {
+                        // Actualizar la conexión existente
+                        conexionExistente.CiudadOrigenID = viewModel.CiudadOrigenID;
+                        conexionExistente.CiudadDestinoID = viewModel.CiudadDestinoID;
+                        conexionExistente.FechaHoraSalida = viewModel.FechaSalida;
+                        conexionExistente.FechaHoraLlegada = viewModel.FechaLlegada;
+                    }
+                    else
+                    {
+                        // Crear y agregar una nueva conexión
+                        Conexion nuevaConexion = new Conexion
+                        {
+                            EnvioID = viewModel.EnvioID,
+                            CiudadOrigenID = viewModel.CiudadOrigenID,
+                            CiudadDestinoID = viewModel.CiudadDestinoID,
+                            FechaHoraSalida = viewModel.FechaSalida,
+                            FechaHoraLlegada = viewModel.FechaLlegada,
+                        };
 
-                        EnvioID = viewModel.EnvioID,
-                        CiudadOrigenID = viewModel.CiudadOrigenID,
-                        CiudadDestinoID = viewModel.CiudadDestinoID,
-                        FechaHoraSalida = viewModel.FechaSalida,
-                        FechaHoraLlegada = viewModel.FechaLlegada,
+                        context.Conexion.Add(nuevaConexion);
+                    }
 
-                    };
-
-                    context.Conexion.Add(nuevaConexion);
+                    // Guardar los cambios en la base de datos
                     context.SaveChanges();
 
-                   
                     return Json(new { success = true, message = "Ok." });
-
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                return Json(new { success = false, message = "Error" });
+                return Json(new { success = false, message = "Error: " + ex.Message });
             }
-           
         }
+
 
 
         [HttpPost]
@@ -124,8 +136,8 @@ namespace VulturDeliverys.Controllers
 
                     dataConexion.NuevaConexion = conexionModel;
 
-                    // Cargar listas para dropdowns si son necesarias
-                    return View("Index", dataConexion);
+                    
+                    return Json(dataConexion.NuevaConexion, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
@@ -134,6 +146,7 @@ namespace VulturDeliverys.Controllers
                 }
             }
         }
+
 
     }
 }

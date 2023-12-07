@@ -6,6 +6,7 @@ if (grabar) {
 
         const model = {
             EnvioID: document.getElementById('inputEnvioID').value,
+            ConexionID: document.getElementById('inputConexionID').value,
             CiudadOrigenID: document.getElementById('ciudadOrigenID').value,
             CiudadDestinoID: document.getElementById('ciudadDestinoID').value,
             FechaSalida: document.getElementById('fechaSalida').value,
@@ -46,7 +47,10 @@ if (grabar) {
                             const envioID = document.getElementById("inputEnvioID").value
                             window.location.href = '/Conexion/Index?EnvioID=' + envioID;
                         });
-
+                        grabar.innerHTML = "Agregar Conexión"
+                        grabar.style.color = "#fff";
+                        grabar.style.backgroundColor = "#286090";
+                        grabar.style.borderColor = "#204d74";
                     } else if (data.success == false && data.message == "Duplicado") {
                         Swal.fire({
                             title: 'No se puede crear!',
@@ -122,3 +126,51 @@ function eliminarConexion(conexionId) {
             console.error('Error:', error);
         });
 }
+
+function cargarDatosParaEdicion(conexionId) {
+    fetch('/Conexion/Editar?conexionId=' + conexionId)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al cargar los datos');
+            }
+            return response.json();
+        })
+        .then(data => {
+            
+            document.getElementById('inputEnvioID').value = data.EnvioID;
+            document.getElementById('inputConexionID').value = data.ConexionID;
+            document.getElementById('ciudadOrigenID').value = data.CiudadOrigenID;
+            document.getElementById('ciudadDestinoID').value = data.CiudadDestinoID;
+            document.getElementById('fechaSalida').value = formatDate(data.FechaSalida);
+            document.getElementById('fechaLlegada').value = data.FechaLlegada ? formatDate(data.FechaLlegada) : '';
+            grabar.innerHTML = "Editar Conexión"
+            grabar.style.color = "#E0E0E0"; 
+            grabar.style.backgroundColor = "#009688"; 
+            grabar.style.borderColor = "#00796B";
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function formatDate(jsonDate) {
+    if (!jsonDate) {
+        return '';
+    }
+
+    // Extrae el número de milisegundos del formato /Date(...)
+    const matches = jsonDate.match(/\/Date\((\d+)\)\//);
+    if (!matches) {
+        return '';
+    }
+
+    const timestamp = parseInt(matches[1], 10);
+    const date = new Date(timestamp);
+
+    let day = ('0' + date.getDate()).slice(-2);
+    let month = ('0' + (date.getMonth() + 1)).slice(-2);
+    let year = date.getFullYear();
+    let hours = ('0' + date.getHours()).slice(-2);
+    let minutes = ('0' + date.getMinutes()).slice(-2);
+
+    return year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+}
+

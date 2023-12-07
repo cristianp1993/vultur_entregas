@@ -46,31 +46,102 @@ namespace VulturDeliverys.Controllers
             {
                 using (var context = new VulturDeliverysEntities())
                 {
-                    var nuevaTrazabilidad = new Trazabilidad
+                    Trazabilidad trazabilidad;
+
+                    if (trazabilidadViewModel.TrazabilidadID != 0)
                     {
+                        // Actualizar la trazabilidad existente
+                        trazabilidad = context.Trazabilidad.FirstOrDefault(t => t.TrazabilidadID == trazabilidadViewModel.TrazabilidadID);
+                        if (trazabilidad == null)
+                        {
+                            return Json(new { success = false, message = "Trazabilidad no encontrada." });
+                        }
+                    }
+                    else
+                    {
+                        // Crear una nueva trazabilidad
+                        trazabilidad = new Trazabilidad();
+                        context.Trazabilidad.Add(trazabilidad);
+                    }
 
-                        EnvioID = trazabilidadViewModel.EnvioID,
-                        FechaHora = trazabilidadViewModel.FechaHora,
-                        Ubicacion = trazabilidadViewModel.Ubicacion,
-                        Estado = trazabilidadViewModel.Estado,
-                        DetallesAdicionales = trazabilidadViewModel.DetallesAdicionales
+                    // Asignar/Actualizar campos
+                    trazabilidad.EnvioID = trazabilidadViewModel.EnvioID;
+                    trazabilidad.FechaHora = trazabilidadViewModel.FechaHora;
+                    trazabilidad.Ubicacion = trazabilidadViewModel.Ubicacion;
+                    trazabilidad.Estado = trazabilidadViewModel.Estado;
+                    trazabilidad.DetallesAdicionales = trazabilidadViewModel.DetallesAdicionales;
 
-                    };
-
-                    context.Trazabilidad.Add(nuevaTrazabilidad);
                     context.SaveChanges();
 
-                    return Json(new { success = true, message = "Ok." });
+                    return Json(new { success = true, message = "Operación exitosa." });
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                return Json(new { success = false, message = "Error" });
-            }                 
-            
-                
+                return Json(new { success = false, message = "Error: " + ex.Message });
+            }
         }
+
+        public ActionResult ObtenerDetalles(int trazabilidadId)
+        {
+            try
+            {
+                using (var context = new VulturDeliverysEntities())
+                {
+                    var trazabilidad = context.Trazabilidad.FirstOrDefault(t => t.TrazabilidadID == trazabilidadId);
+                    if (trazabilidad == null)
+                    {
+                        return Json(new {}, JsonRequestBehavior.AllowGet);
+                    }
+
+                    var trazabilidadDto = new TrazabilidadViewModel
+                    {
+                        TrazabilidadID = trazabilidad.TrazabilidadID,
+                        EnvioID = (int)trazabilidad.EnvioID,
+                        FechaHora = (DateTime)trazabilidad.FechaHora,
+                        Ubicacion = trazabilidad.Ubicacion,
+                        Estado = trazabilidad.Estado,
+                        DetallesAdicionales = trazabilidad.DetallesAdicionales
+                        // Otros campos según sea necesario
+                    };
+
+                    return Json(trazabilidadDto , JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new {}, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Eliminar(int trazabilidadId)
+        {
+            try
+            {
+                using (var context = new VulturDeliverysEntities())
+                {
+                    var trazabilidad = context.Trazabilidad.FirstOrDefault(t => t.TrazabilidadID == trazabilidadId);
+                    if (trazabilidad == null)
+                    {
+                        return Json(new { success = false, message = "Trazabilidad no encontrada." });
+                    }
+                    else
+                    {
+                        context.Trazabilidad.Remove(trazabilidad);
+                        context.SaveChanges();
+
+                        return Json(new { success = true, message = "Trazabilidad Eliminada." });
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return View("Index");
+            }
+        }
+
 
 
     }

@@ -5,6 +5,7 @@ if (grabarEnvio) {
         e.preventDefault();
 
         const model = {
+            EnvioID: document.getElementById('EnvioID').value,
             EmisorID: document.getElementById('EmisorID').value,
             ReceptorID: document.getElementById('ReceptorID').value,
             DireccionOrigen: document.getElementById('DireccionOrigen').value,
@@ -51,6 +52,10 @@ if (grabarEnvio) {
 
                             window.location.href = '/Envio/Index';
                         });
+                        grabarEnvio.innerHTML = "Agregar Envío"
+                        grabarEnvio.style.color = "#fff";
+                        grabarEnvio.style.backgroundColor = "#286090";
+                        grabarEnvio.style.borderColor = "#204d74";
 
                     } else if (data.success == false && data.message == "Duplicado") {
                         Swal.fire({
@@ -78,4 +83,81 @@ if (grabarEnvio) {
             })
         }
     })
+}
+
+
+function cargarDatosEnvio(envioId) {
+    fetch('/Envio/Editar?envioId=' + envioId)
+        .then(response => response.json())
+        .then(data => {
+            
+            document.getElementById('EnvioID').value = data.EnvioID;
+
+            // Mapeo de otros campos
+            document.getElementById('EmisorID').value = data.EmisorID;
+            document.getElementById('CiudadOrigen').value = data.CiudadOrigenID;
+            document.getElementById('DireccionOrigen').value = data.DireccionOrigen;
+            document.getElementById('ReceptorID').value = data.ReceptorID;
+            document.getElementById('CiudadDestino').value = data.CiudadDestinoID;
+            document.getElementById('DireccionDestino').value = data.DireccionDestino;
+            document.getElementById('TelefonoContacto').value = data.TelefonoContacto;
+            document.getElementById('PesoPaquete').value = data.PesoPaquete;
+            document.getElementById('ValorEnvio').value = data.ValorEnvio;
+            document.getElementById('DescripcionPaquete').value = data.DescripcionPaquete;
+
+         
+            if (data.FechaEnvio) {
+                // Extraer los milisegundos del formato /Date(...)
+                const milisegundos = parseInt(data.FechaEnvio.match(/\/Date\((\d+)\)\//)[1]);
+                const fechaEnvio = new Date(milisegundos);
+                const formattedDate = fechaEnvio.toISOString().split('T')[0];
+                document.getElementById('FechaEnvio').value = formattedDate;
+            }
+
+
+            grabarEnvio.innerHTML = "Editar Envío"
+            grabarEnvio.style.color = "#E0E0E0";
+            grabarEnvio.style.backgroundColor = "#009688";
+            grabarEnvio.style.borderColor = "#00796B";
+
+            document.getElementById('EmisorID').focus();
+            document.getElementById('EmisorID').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        })
+        .catch(error => console.error('Error:', error));
+}
+function eliminarEnvio(envioId) {
+
+    fetch('/Envio/Eliminar', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ envioId: envioId })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        title: 'Envío Eliminado',
+                        text: 'Se eliminó correctamente',
+                        icon: 'success',
+                        timer: 3000
+                    })
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 2000);
+                } else {
+                    Swal.fire({
+                        title: 'No se puede eliminar',
+                        text: 'Tiene información asociada',
+                        icon: 'error',
+                        timer: 3000
+                    })
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+    });
+    
 }

@@ -28,12 +28,14 @@
     </div>
 </div>
 
-<div class="buscador-container">
-    <input type="text" id="buscador" class="buscador-input" placeholder="Buscar guías...">
-    <button class="buscador-btn" id="btnBuscarGuia">
-        <i class="fa fa-search"></i>
-    </button>
-</div>
+<form id="formBuscador">
+    <div class="buscador-container">
+        <input type="text" id="buscador" class="buscador-input" placeholder="Buscar guías...">
+        <button type="submit" class="buscador-btn" id="btnBuscarGuia">
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
+</form>
 <dialog id="dialogo"></dialog>
 
 
@@ -52,7 +54,7 @@
         background-repeat: no-repeat;
         background-position: center 30%;
         font-family: 'Arial', sans-serif;
-        overflow: hidden;
+       overflow-x: hidden;
     }
 
     .login-container {
@@ -214,4 +216,5 @@
         background-color: #003366; 
     }
 
+   
 </style>

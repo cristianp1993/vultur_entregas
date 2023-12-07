@@ -1,0 +1,45 @@
+﻿@model VulturDeliverys.Models.ViewModels.UsuarioViewModel
+@{
+    ViewBag.Title = "Crear Usuario";
+}
+
+<link href="~/Content/General.css" rel="stylesheet" type="text/css" />
+<h2>Crear Usuario</h2>
+
+@using (Html.BeginForm("CrearUsuario", "Usuario", FormMethod.Post, new { id = "formularioCrear" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NombreUsuario)
+        @Html.TextBoxFor(model => model.NombreUsuario, new { @class = "form-control", @id = "nombreUsuario" })
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Contrasena)
+        @Html.PasswordFor(model => model.Contrasena, new { @class = "form-control", @id = "contrasena" })
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email)
+        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @id = "email", type = "email" })
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Rol)
+        @Html.DropDownListFor(model => model.Rol, (IEnumerable<SelectListItem>)ViewBag.Roles, "Seleccione un Rol", new { @class = "form-control", @id = "rol" })
+
+
+    </div>
+
+    <button type="submit" class="btn btn-primary" id="btnCrear">Crear Usuario</button>
+}
+
+@section Scripts {
+    <script src="~/Scripts/Usuario/CrearUsuario.js" type="text/javascript">
+        
+    </script>
+}

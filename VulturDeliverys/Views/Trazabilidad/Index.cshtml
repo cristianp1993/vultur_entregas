@@ -12,28 +12,33 @@
 
     <div class="form-group row">
         <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.NuevaTrazabilidad.TrazabilidadID, new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.NuevaTrazabilidad.TrazabilidadID, new { @class = "form-control", @id = "TrazabilidadID", @onchange = "editarTrazabilidad(this.value)" })
+        </div>
+        <div class="form-group col-md-4">
             @Html.LabelFor(model => model.NuevaTrazabilidad.EnvioID, new { @class = "control-label" })
-            @Html.TextBoxFor(model => model.NuevaTrazabilidad.EnvioID, new { @class = "form-control", @id= "EnvioID" })
+            @Html.TextBoxFor(model => model.NuevaTrazabilidad.EnvioID, new { @class = "form-control", @id = "EnvioID" })
         </div>
 
         <div class="form-group col-md-4">
             @Html.LabelFor(model => model.NuevaTrazabilidad.FechaHora, new { @class = "control-label" })
-            @Html.TextBoxFor(model => model.NuevaTrazabilidad.FechaHora, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", @type = "datetime-local", @Value = DateTime.Now.ToString("yyyy-MM-ddTHH:mm"), @id= "FechaHora" })
+            @Html.TextBoxFor(model => model.NuevaTrazabilidad.FechaHora, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", @type = "datetime-local", @Value = DateTime.Now.ToString("yyyy-MM-ddTHH:mm"), @id = "FechaHora" })
         </div>
-        <div class="form-group col-md-4">
-            @Html.LabelFor(model => model.NuevaTrazabilidad.Ubicacion, new { @class = "control-label" })
-            @Html.TextBoxFor(model => model.NuevaTrazabilidad.Ubicacion, new { @class = "form-control",@id= "Ubicacion" })
-        </div>
+
     </div>
 
     <div class="form-group row">
         <div class="form-group col-md-4">
-            @Html.LabelFor(model => model.NuevaTrazabilidad.Estado, new { @class = "control-label" })
-            @Html.DropDownListFor(model => model.NuevaTrazabilidad.Estado, Model.NuevaTrazabilidad.EstadosPosibles, "Seleccione el Estado", new { @class = "form-control", @id= "Estado" })
+            @Html.LabelFor(model => model.NuevaTrazabilidad.Ubicacion, new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.NuevaTrazabilidad.Ubicacion, new { @class = "form-control", @id = "Ubicacion" })
         </div>
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.NuevaTrazabilidad.Estado, new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.NuevaTrazabilidad.Estado, Model.NuevaTrazabilidad.EstadosPosibles, "Seleccione el Estado", new { @class = "form-control", @id = "Estado" })
+        </div>
+        <div class="form-group col-md-4">
             @Html.LabelFor(model => model.NuevaTrazabilidad.DetallesAdicionales, new { @class = "control-label" })
-            @Html.TextAreaFor(model => model.NuevaTrazabilidad.DetallesAdicionales, new { @class = "form-control", @id= "DetallesAdicionales" })
+            @Html.TextAreaFor(model => model.NuevaTrazabilidad.DetallesAdicionales, new { @class = "form-control", @id = "DetallesAdicionales" })
         </div>
     </div>
 
@@ -50,6 +55,7 @@
             <th>Ubicación</th>
             <th>Estado</th>
             <th>Detalles Adicionales</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -62,6 +68,14 @@
                 <td>@trazabilidad.Ubicacion</td>
                 <td>@trazabilidad.Estado</td>
                 <td>@trazabilidad.DetallesAdicionales</td>
+                <td style="width:130px">
+                    <a href="javascript:void(0)" onclick="editarTrazabilidad(@trazabilidad.TrazabilidadID)" title="Editar">
+                        <img src="~/Images/EditarConexion.png" alt="Editar" class="icon-tabla" />
+                    </a>
+                    <a href="javascript:void(0)" onclick="eliminarTrazabilidad(@trazabilidad.TrazabilidadID)" title="Eliminar">
+                        <img src="~/Images/Eliminar.png" alt="Eliminar" class="icon-tabla" />
+                    </a>
+                </td>
             </tr>
         }
     </tbody>
@@ -69,7 +83,7 @@
 
 
 @section Scripts{
-    
+
     <script type="text/javascript" src="~/Scripts/Trazabilidad/Trazabilidad.js"></script>
     <script type="text/javascript" src="~/Scripts/General/ValidadorForm.js"></script>
 }

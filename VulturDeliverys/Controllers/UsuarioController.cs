@@ -25,12 +25,12 @@ namespace VulturDeliverys.Controllers
         /// <param name="param1">Modelo con los datos del usuario.</param>
         /// <returns>Devuelve la existencia o no del usuario</returns>
         [HttpPost]
-        public ActionResult Index( UsuarioViewModel model)
+        public ActionResult Index(UsuarioViewModel model)
         {
 
             using (var context = new VulturDeliverysEntities())
             {
-                var user = context.Usuario.FirstOrDefault(xh=> xh.NombreUsuario== model.NombreUsuario && xh.Contrasena== model.Contrasena);
+                var user = context.Usuario.FirstOrDefault(xh => xh.NombreUsuario == model.NombreUsuario && xh.Contrasena == model.Contrasena);
                 if (user != null)
                 {
                     return Json(new { success = true, message = "Inicio de sesión correcto." });
@@ -40,13 +40,13 @@ namespace VulturDeliverys.Controllers
                     return Json(new { success = false, message = "Error en el inicio de sesión." });
                 }
             }
-            
+
         }
 
         public ActionResult ObtenerDetallesDeEnvioJson(int envioId)
         {
             // Método que obtiene los detalles
-            var detallesEnvio = ConsultarGuia(envioId); 
+            var detallesEnvio = ConsultarGuia(envioId);
 
             if (detallesEnvio != null)
             {
@@ -58,6 +58,84 @@ namespace VulturDeliverys.Controllers
                 return Json(new { }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        public ActionResult Crear()
+        {
+            var roles = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "Administrador", Text = "Administrador" },
+                new SelectListItem { Value = "Asesor", Text = "Asesor" }
+                
+            };
+
+            ViewBag.Roles = roles;
+            UsuarioViewModel user = new UsuarioViewModel();
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CrearUsuario(UsuarioViewModel model)
+        {
+
+            try
+            {
+                using (VulturDeliverysEntities context = new VulturDeliverysEntities())
+                {
+
+                    Usuario nuevoUsuario = new Usuario
+                    {
+                        NombreUsuario = model.NombreUsuario,
+                        Contrasena = model.Contrasena,
+                        Email = model.Email,
+                        Rol = model.Rol
+                    };
+
+                    // Agregar el nuevo usuario al contexto y guardar los cambios
+                    context.Usuario.Add(nuevoUsuario);
+                    context.SaveChanges();
+
+                    // Redireccionar a otro view, como el listado de usuarios, tras una creación exitosa
+                    return RedirectToAction("Usuarios", "Usuario");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                ModelState.AddModelError("", "Error al crear el usuario: " + ex.Message);
+            }
+
+            // Si llegamos aquí, algo falló, vuelve a mostrar el formulario
+            return View(model);
+        }
+
+        public ActionResult Usuarios()
+        {
+            List<UsuarioViewModel> usuariosViewModel = new List<UsuarioViewModel>();
+
+            using (VulturDeliverysEntities context = new VulturDeliverysEntities())
+            {
+
+                List<Usuario> usuarios = context.Usuario.ToList();
+
+                // Convertir cada entidad Usuario a UsuarioViewModel
+                foreach (var usuario in usuarios)
+                {
+                    UsuarioViewModel viewModel = new UsuarioViewModel
+                    {
+                        UsuarioID = usuario.UsuarioID,
+                        NombreUsuario = usuario.NombreUsuario,
+                        Email = usuario.Email,
+                        Rol = usuario.Rol
+
+                    };
+                    usuariosViewModel.Add(viewModel);
+                }
+            }
+
+            return View(usuariosViewModel);
+        }
+
 
         public EnvioDetallesViewModel ConsultarGuia(int nroGuia)
         {
