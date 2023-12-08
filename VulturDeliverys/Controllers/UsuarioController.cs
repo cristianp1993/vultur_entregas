@@ -171,7 +171,7 @@ namespace VulturDeliverys.Controllers
                         NombreCiudadDestino = ciu.NombreCiudad,
                         FechaHoraSalida = (DateTime)temp.en.FechaHoraSalida,
                         FechaHoraLlegada = temp.en.FechaHoraLlegada
-                    })
+                    }).OrderBy(xh => xh.FechaHoraSalida)
                     .ToList();
 
                 // Obteniendo las trazabilidades relacionadas con el envío
@@ -183,7 +183,7 @@ namespace VulturDeliverys.Controllers
                         Ubicacion = t.Ubicacion,
                         Estado = t.Estado,
                         DetallesAdicionales = t.DetallesAdicionales
-                    })
+                    }).OrderBy(xh => xh.FechaHora)
                     .ToList();
 
                 return viewModel;

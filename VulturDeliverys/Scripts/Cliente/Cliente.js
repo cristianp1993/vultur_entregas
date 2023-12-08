@@ -48,7 +48,7 @@ if (miFormulario) {
                             timer: 2000
                         }).then(() => {
 
-                            window.location.href = '/Home/Index';
+                            window.location.href = '/Cliente/Index';
                         });
 
                     } else if (data.success == false && data.message == "Duplicado") {

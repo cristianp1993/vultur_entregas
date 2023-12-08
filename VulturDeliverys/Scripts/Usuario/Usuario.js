@@ -28,7 +28,7 @@ document.getElementById("miFormulario").addEventListener("submit", function (e) 
                 title: 'Bienvenido',
                 text: 'Inicio de sesión exitoso!',
                 icon: 'success',
-                timer: 2000
+                timer: 4000
             }).then(() => {
                     
                 window.location.href = '/Home/Index';

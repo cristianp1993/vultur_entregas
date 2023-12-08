@@ -171,12 +171,12 @@ namespace VulturDeliverys.Controllers
                     }
                 }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Cliente");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                return RedirectToAction("Index", "Cliente");
             }
 
         }
